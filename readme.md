@@ -5,10 +5,12 @@ The **ENDOR library** is a C++ library for the creation and navigation of AND-OR
 ## 1. Installation & Usage
 
 The **ENDOR library** uses the following tools:
+
 1. `CMake` for building the executable
 2. `doxygen` for generating the documentation
 
 To build the **ENDOR library**, open a Terminal window and:
+
 1. browse into the `<endor>` folder
 2. `cmake .`
 3. `make`
@@ -16,6 +18,7 @@ To build the **ENDOR library**, open a Terminal window and:
 ### Sample program
 
 To run the sample program for the  **ENDOR library**, open a terminal window and:
+
 1. browse into the `<endor>` folder
 2. `./endor`
 
@@ -36,6 +39,7 @@ and load a description from a file:
 `oneGraph.loadFromFile(description);`
 
 The loading function automatically sets up the graph, by calling `setupGraph()`, which:
+
 1. defines whether a node is feasible
 2. generates all paths navigating the graph
 3. identifies the optimal path
