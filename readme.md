@@ -58,6 +58,7 @@ Up-to-date documentation for this release is accessible from `./docs/html/index.
 The rules for the generation of the documentation are specified in `./doxygen_config.txt`.
 
 To re-generate the documentation, open a Terminal window and:
+
 1. browse into the `<endor>` folder
 2. `doxygen doxygen_config`
 
