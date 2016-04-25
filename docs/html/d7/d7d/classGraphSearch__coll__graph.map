@@ -1,0 +1,4 @@
+<map id="GraphSearch" name="GraphSearch">
+<area shape="rect" id="node2" href="$db/dbf/classAOgraph.xhtml" title="class &quot;AOgraph&quot; for the AND&#45;OR graph " alt="" coords="121,327,295,536"/>
+<area shape="rect" id="node3" href="$d6/d22/classAOnode.xhtml" title="class &quot;AOnode&quot; for the generic node element of an AND&#45;OR graph " alt="" coords="11,5,133,263"/>
+</map>

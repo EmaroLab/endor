@@ -1,0 +1,47 @@
+THIS FILE DESCRIBES THE RULES FOR WRITING ASSEMBLY DESCRIPTIONS AS AND-OR GRAPHS
+*this is NOT a valid assembly description file*
+
+The assembly description file is composed of three sections:
+1) header
+2) nodes description
+3) hyper-arc description
+
+HEADER
+The header should be the first line of the file, in the form of:
+[graph name] [number of nodes] [name of the final assembly node]
+For example:
+    pencil_assembly 6 cap_&_filter_&_body
+
+NODES DESCRIPTION
+The nodes are described with [number of nodes] lines below the header,
+each in the form of:
+[node name] [node cost]
+For example:
+    cap_&_filter_&_body 2
+    cap_&_filter 4
+    body 1
+    cap 1
+    filter_&_body 2
+    filter 1
+
+HYPERARC DESCRIPTION
+Each hyperarc is described by a set of at least 2 lines.
+The first line should be in the form of:
+[number of children nodes] [name of the father node]
+For example:
+    2 cap_&_filter_&_body
+The following [number of children nodes] lines should be in the form of:
+[child node name]
+For example:
+    cap_&_filter
+    body
+Hyperarcs are listed one after the other, for example:
+    2 cap_&_filter_&_body
+    cap
+    filter_&_body
+    2 cap_&_filter
+    cap
+    filter
+    2 filter_&_body
+    filter
+    body

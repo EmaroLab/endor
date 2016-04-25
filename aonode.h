@@ -1,0 +1,71 @@
+//===============================================================================//
+// Name			: aonode.h
+// Author(s)	: Barbara Bruno, Yeshasvi Tirupachuri V.S.
+// Affiliation	: University of Genova, Italy - dept. DIBRIS
+// Version		: 1.0
+// Description	: Generic node element of an AND-OR graph
+//===============================================================================//
+
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+#ifndef AONODE_H
+#define AONODE_H
+
+// empty declaration (required by HyperArc)
+class AOnode;
+
+//! class "HyperArc" for the hyperarc connecting one parent node to a number of child nodes in an AND relationship among themselves
+class HyperArc
+{
+    public:
+        vector<AOnode*> children;  //!< set of child nodes connected via the hyperarc
+        
+        //! constructor
+		HyperArc(vector<AOnode*> nodes);
+        
+        //! display hyperarc information
+        void printArcInfo(int index);
+        
+        //! destructor
+		~HyperArc()
+		{
+			//DEBUG:cout<<endl <<"Destroying HyperArc object" <<endl;
+		}
+};
+
+//! class "AOnode" for the generic node element of an AND-OR graph
+class AOnode
+{
+    public:        
+        string nName;           //!< name of the node
+        int nCost;              //!< cost of the node
+        bool nSolved;           //!< solved: the operation has been performed
+        bool nFeasible;         //!< feasible: >=1 hyperarc has all the child nodes solved
+        vector<HyperArc> arcs;  //!< set of hyperarcs connecting the node to child nodes
+        
+        //! constructor
+		AOnode(string name, int cost);
+        
+        //! add an hyperarc to child nodes
+        void addArc(vector<AOnode*> nodes);
+        
+        //! display node information
+        void printNodeInfo();
+        
+        //! determine whether the node is feasible
+        void isFeasible();
+        
+        //! set the node as solved
+        bool setSolved();
+        
+        //! destructor
+		~AOnode()
+		{
+			//DEBUG:cout<<endl <<"Destroying AOnode object" <<endl;
+		}
+};
+
+#endif
