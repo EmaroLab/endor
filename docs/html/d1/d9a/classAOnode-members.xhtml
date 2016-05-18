@@ -25,7 +25,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../endor.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">endor
-   &#160;<span id="projectnumber">1.0</span>
+   &#160;<span id="projectnumber">2.0</span>
    </div>
    <div id="projectbrief">C++ library to create and navigate AND-OR graphs</div>
   </td>
@@ -41,7 +41,6 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="../../index.xhtml"><span>Main&#160;Page</span></a></li>
-      <li><a href="../../pages.xhtml"><span>Related&#160;Pages</span></a></li>
       <li class="current"><a href="../../annotated.xhtml"><span>Classes</span></a></li>
       <li><a href="../../files.xhtml"><span>Files</span></a></li>
       <li>
@@ -91,7 +90,7 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 
 <p>This is the complete list of members for <a class="el" href="../../d6/d22/classAOnode.xhtml">AOnode</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="../../d6/d22/classAOnode.xhtml#abf615627731e4f03d0fed5294da24288">addArc</a>(vector&lt; AOnode * &gt; nodes)</td><td class="entry"><a class="el" href="../../d6/d22/classAOnode.xhtml">AOnode</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="../../d6/d22/classAOnode.xhtml#a5eb4c92896c7c1309d8723882911c2fc">addArc</a>(vector&lt; AOnode * &gt; nodes, int hyperarcCost)</td><td class="entry"><a class="el" href="../../d6/d22/classAOnode.xhtml">AOnode</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="../../d6/d22/classAOnode.xhtml#ad316f714e374f30c1ce69fde03da5f96">AOnode</a>(string name, int cost)</td><td class="entry"><a class="el" href="../../d6/d22/classAOnode.xhtml">AOnode</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="../../d6/d22/classAOnode.xhtml#a8c739f761ad7badefb9fa1b6fa946cc2">arcs</a></td><td class="entry"><a class="el" href="../../d6/d22/classAOnode.xhtml">AOnode</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="../../d6/d22/classAOnode.xhtml#aa8c56db8e9c590e64e944ac9a06bd45e">isFeasible</a>()</td><td class="entry"><a class="el" href="../../d6/d22/classAOnode.xhtml">AOnode</a></td><td class="entry"></td></tr>
@@ -99,13 +98,14 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
   <tr><td class="entry"><a class="el" href="../../d6/d22/classAOnode.xhtml#ad3aa53c9b37da8d0128e4ce7cfd6043c">nFeasible</a></td><td class="entry"><a class="el" href="../../d6/d22/classAOnode.xhtml">AOnode</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="../../d6/d22/classAOnode.xhtml#af28c48c20f4bc2cdc0d297d87c8bbe53">nName</a></td><td class="entry"><a class="el" href="../../d6/d22/classAOnode.xhtml">AOnode</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="../../d6/d22/classAOnode.xhtml#a7b3552a269be035589633969fc3982c9">nSolved</a></td><td class="entry"><a class="el" href="../../d6/d22/classAOnode.xhtml">AOnode</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="../../d6/d22/classAOnode.xhtml#ad6b5e2941cba4d727bfc8319590d46cf">printNodeInfo</a>()</td><td class="entry"><a class="el" href="../../d6/d22/classAOnode.xhtml">AOnode</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="../../d6/d22/classAOnode.xhtml#acf10113d7e2bdb01ca67e6bcf43fabf3">setSolved</a>()</td><td class="entry"><a class="el" href="../../d6/d22/classAOnode.xhtml">AOnode</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="../../d6/d22/classAOnode.xhtml#a4228fc41a7c93852f41c82c4ee57ad91">~AOnode</a>()</td><td class="entry"><a class="el" href="../../d6/d22/classAOnode.xhtml">AOnode</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="../../d6/d22/classAOnode.xhtml#a2a2ad8395675ca0a1e59fa35f781230e">parents</a></td><td class="entry"><a class="el" href="../../d6/d22/classAOnode.xhtml">AOnode</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="../../d6/d22/classAOnode.xhtml#ad6b5e2941cba4d727bfc8319590d46cf">printNodeInfo</a>()</td><td class="entry"><a class="el" href="../../d6/d22/classAOnode.xhtml">AOnode</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="../../d6/d22/classAOnode.xhtml#acf10113d7e2bdb01ca67e6bcf43fabf3">setSolved</a>()</td><td class="entry"><a class="el" href="../../d6/d22/classAOnode.xhtml">AOnode</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="../../d6/d22/classAOnode.xhtml#a4228fc41a7c93852f41c82c4ee57ad91">~AOnode</a>()</td><td class="entry"><a class="el" href="../../d6/d22/classAOnode.xhtml">AOnode</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
 </table></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Apr 25 2016 18:39:24 for endor by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed May 18 2016 18:47:17 for endor by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

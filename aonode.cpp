@@ -2,7 +2,6 @@
 // Name			: aonode.cpp
 // Author(s)	: Barbara Bruno, Yeshasvi Tirupachuri V.S.
 // Affiliation	: University of Genova, Italy - dept. DIBRIS
-// Version		: 1.0
 // Description	: Generic node element of an AND-OR graph
 //===============================================================================//
 
@@ -10,9 +9,11 @@
 
 //! constructor of class HyperArc
 //! @param[in] nodes    set of child nodes connected via the hyperarc
-HyperArc::HyperArc(vector<AOnode*> nodes)
+//! @param[in] cost     generic hyperarc cost
+HyperArc::HyperArc(vector<AOnode*> nodes, int cost)
 {
     children = nodes;
+    hCost = cost;
     
     //DEBUG:printArcInfo();
 }
@@ -22,6 +23,7 @@ HyperArc::HyperArc(vector<AOnode*> nodes)
 void HyperArc::printArcInfo(int index)
 {
     cout<<"Info of hyperarc: " <<index <<endl;
+    cout<<"Hyperarc cost: " <<hCost <<endl;
     cout<<"Child nodes: ";
     for (int i=0; i< (int)children.size(); i++)
         cout<<children[i]->nName <<" ";
@@ -42,11 +44,16 @@ AOnode::AOnode(string name, int cost)
 }
 
 //! add an hyperarc to child nodes
-//! @param[in] nodes   set of child nodes connected via the hyperarc
-void AOnode::addArc(vector<AOnode*> nodes)
+//! @param[in] nodes            set of child nodes connected via the hyperarc
+//! @param[in] hyperarcCost     hyperarc cost
+void AOnode::addArc(vector<AOnode*> nodes, int hyperarcCost)
 {
     // create the hyperarc
-    HyperArc toAdd(nodes);
+    HyperArc toAdd(nodes, hyperarcCost);
+    
+    // add this node to the vector of parents of each child node
+    for (int i=0; i< (int)nodes.size(); i++)
+        nodes[i]->parents.push_back(this);
     
     // add it to the set of hyperarcs
     arcs.push_back(toAdd);
@@ -56,9 +63,13 @@ void AOnode::addArc(vector<AOnode*> nodes)
 void AOnode::printNodeInfo()
 {
     cout<<"Info of node: " <<nName <<endl;
-    cout<<"Cost: " <<nCost <<endl;
+    cout<<"Node cost: " <<nCost <<endl;
     cout<<"Is feasible? " <<boolalpha <<nFeasible <<endl;
     cout<<"Is solved? " <<boolalpha <<nSolved <<endl;
+    cout<<"Parent nodes: ";
+    for (int i=0; i< (int)parents.size(); i++)
+        cout<<parents[i]->nName <<" ";
+    cout<<endl;
     cout<<"Number of hyperarcs: " <<arcs.size() <<endl;
     for (int i=0; i< (int)arcs.size(); i++)
         arcs[i].printArcInfo(i);        
@@ -111,13 +122,9 @@ bool AOnode::setSolved()
 {
     // a node can be solved only if it's feasible
     if (nFeasible == true)
-    {
         nSolved = true;
-        return true;
-    }
     else
-    {
         cout<<"[ERROR] The node is not feasible. Are you sure it is solved?" <<endl;
-        return false;
-    }
+    
+    return nSolved;
 }

@@ -1,0 +1,58 @@
+deMello 12 node1 hyperarc
+node1 0
+node2 0
+node3 0
+node4 0
+node5 0
+node6 0
+node7 0
+node8 0
+node9 0
+node10 0
+node11 0
+node12 0
+2 node1 5
+node9
+node3
+2 node1 8
+node5
+node7
+2 node1 8
+node6
+node8
+2 node1 5
+node2
+node12
+2 node2 6
+node9
+node4
+2 node2 8
+node5
+node11
+2 node2 2
+node6
+node10
+2 node3 2
+node10
+node7
+2 node3 8
+node11
+node8
+2 node3 6
+node4
+node12
+2 node4 2
+node10
+node11
+2 node5 1
+node9
+node10
+2 node6 4
+node9
+node11
+2 node7 4
+node11
+node12
+2 node8 1
+node10
+node12

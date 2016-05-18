@@ -30,13 +30,13 @@ To include the library in your program, include `"aograph.h"`.
 
 During initialization, the first thing to do is to create a graph:
 
-`AOgraph oneGraph("DEFAULT");`
+`AOgraph::AOgraph("DEFAULT");`
 
-and load a description from a file:
+and load a description from a file using:
 
 `string description = "./assemblies/pencil_assembly.txt";`
 
-`oneGraph.loadFromFile(description);`
+`AOgraph::loadFromFile(description);`
 
 The loading function automatically sets up the graph, by calling `setupGraph()`, which:
 
@@ -47,9 +47,18 @@ The loading function automatically sets up the graph, by calling `setupGraph()`,
 
 At run-time, set a node as solved with:
 
-`oneGraph.solveByName("[name_of_node]");`
+`AOgraph::solveByName("[name_of_node]");`
 
-`solveByName()` automatically calls `suggestNext()` which returns the name of the node suggested by the system to solve.
+The library implements two alternative strategies for suggesting the next node to solve:
+
+1. the long-sighted strategy suggests a node along the path which minimizes the overall cost to reach the head node of the graph;
+2. the short-sighted strategy suggests a node along the path which most benefitted from the solving of the last node;
+
+The long-sighted strategy is associated with code 0 and the long-sighted strategy with code 1. Ask for a suggestion with:
+
+`AOgraph::suggestNext([1/0]);`
+
+which displays the name of the node suggested by the system to solve.
 
 ## 2. Documentation
 

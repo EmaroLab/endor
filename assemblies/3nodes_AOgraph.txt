@@ -2,6 +2,6 @@
 nodeF 1
 nodeC1 3
 nodeC2 5
-2 nodeF
+2 nodeF 3
 nodeC1
 nodeC2

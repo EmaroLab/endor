@@ -2,7 +2,6 @@
 // Name			: aonode.h
 // Author(s)	: Barbara Bruno, Yeshasvi Tirupachuri V.S.
 // Affiliation	: University of Genova, Italy - dept. DIBRIS
-// Version		: 1.0
 // Description	: Generic node element of an AND-OR graph
 //===============================================================================//
 
@@ -21,10 +20,11 @@ class AOnode;
 class HyperArc
 {
     public:
-        vector<AOnode*> children;  //!< set of child nodes connected via the hyperarc
+        vector<AOnode*> children;   //!< set of child nodes connected via the hyperarc
+        int hCost;                  //!< cost of the hyperarc
         
         //! constructor
-		HyperArc(vector<AOnode*> nodes);
+		HyperArc(vector<AOnode*> nodes, int cost);
         
         //! display hyperarc information
         void printArcInfo(int index);
@@ -40,17 +40,18 @@ class HyperArc
 class AOnode
 {
     public:        
-        string nName;           //!< name of the node
-        int nCost;              //!< cost of the node
-        bool nSolved;           //!< solved: the operation has been performed
-        bool nFeasible;         //!< feasible: >=1 hyperarc has all the child nodes solved
-        vector<HyperArc> arcs;  //!< set of hyperarcs connecting the node to child nodes
+        string nName;               //!< name of the node
+        int nCost;                  //!< cost of the node
+        bool nSolved;               //!< solved: the operation has been performed
+        bool nFeasible;             //!< feasible: >=1 hyperarc has all child nodes solved
+        vector<HyperArc> arcs;      //!< hyperarcs connecting the node to child nodes
+        vector<AOnode*> parents;    //!< nodes having this node as a child node
         
         //! constructor
 		AOnode(string name, int cost);
         
         //! add an hyperarc to child nodes
-        void addArc(vector<AOnode*> nodes);
+        void addArc(vector<AOnode*> nodes, int hyperarcCost);
         
         //! display node information
         void printNodeInfo();

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['loadfromfile',['loadFromFile',['../db/dbf/classAOgraph.xhtml#ae4047aad30065aaf5ebdb04b5ee4565e',1,'AOgraph']]]
+  ['isfeasible',['isFeasible',['../d6/d22/classAOnode.xhtml#aa8c56db8e9c590e64e944ac9a06bd45e',1,'AOnode']]]
 ];

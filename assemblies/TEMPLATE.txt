@@ -9,6 +9,7 @@ The assembly description file is composed of three sections:
 HEADER
 The header should be the first line of the file, in the form of:
 [graph name] [number of nodes] [name of the final assembly node]
+
 For example:
     pencil_assembly 6 cap_&_filter_&_body
 
@@ -16,6 +17,9 @@ NODES DESCRIPTION
 The nodes are described with [number of nodes] lines below the header,
 each in the form of:
 [node name] [node cost]
+
+Note: set the [node cost] parameter to 0 if the node has no cost.
+
 For example:
     cap_&_filter_&_body 2
     cap_&_filter 4
@@ -23,18 +27,24 @@ For example:
     cap 1
     filter_&_body 2
     filter 1
-
+    
 HYPERARC DESCRIPTION
 Each hyperarc is described by a set of at least 2 lines.
 The first line should be in the form of:
-[number of children nodes] [name of the father node]
+[number of children nodes] [name of the father node] [hyperarc cost]
+
+Note: set the [hyperarc cost] parameter to 0 if the hyperarc has no cost.
+
 For example:
-    2 cap_&_filter_&_body
+    2 cap_&_filter_&_body 0
+    
 The following [number of children nodes] lines should be in the form of:
 [child node name]
+
 For example:
     cap_&_filter
     body
+    
 Hyperarcs are listed one after the other, for example:
     2 cap_&_filter_&_body
     cap

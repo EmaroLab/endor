@@ -26,6 +26,7 @@ void displayHelp()
 int main(int argc, char **argv)
 {
     char c;
+    char c_strategy;
     string fileName;
     string nodeName;
     
@@ -59,7 +60,9 @@ int main(int argc, char **argv)
                 oneGraph.loadFromFile(fileName);
                 break;
             case 'N':
-                oneGraph.suggestNext();
+                cout<<"[Y/N] Use long-sighted (optimal path) strategy? ";
+                cin>>c_strategy;
+                oneGraph.suggestNext(c_strategy == 'Y');
                 break;
             case 'S':
                 cout<<"Solved node name: ";

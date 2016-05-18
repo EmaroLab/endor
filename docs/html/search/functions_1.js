@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['findbyname',['findByName',['../db/dbf/classAOgraph.xhtml#a8437faadc195ca2835e41c384777d061',1,'AOgraph']]],
-  ['findoptimalpath',['findOptimalPath',['../db/dbf/classAOgraph.xhtml#ad27f163e8b9ca4aeba1353ef1783d95a',1,'AOgraph']]]
+  ['computeaddcost',['computeAddCost',['../db/dbf/classAOgraph.xhtml#aa569c01b00233f8668e93da2a8d04bf8',1,'AOgraph']]],
+  ['computeoverallupdate',['computeOverallUpdate',['../db/dbf/classAOgraph.xhtml#aa04f592cb029679028716e51249f38b2',1,'AOgraph']]]
 ];
