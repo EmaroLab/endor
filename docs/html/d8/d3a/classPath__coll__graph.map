@@ -1,7 +1,7 @@
 <map id="Path" name="Path">
-<area shape="rect" id="node3" href="$d6/d22/classAOnode.xhtml" title="class &quot;AOnode&quot; for the generic node element of an AND&#45;OR graph " alt="" coords="290,860,412,1053"/>
-<area shape="rect" id="node7" href="$db/dba/classHyperArc.xhtml" title="class &quot;HyperArc&quot; for the hyperarc connecting one parent node to a number of child nodes in an AND rel..." alt="" coords="492,489,602,603"/>
-<area shape="rect" id="node4" title="STL class. " alt="" coords="361,715,440,796"/>
-<area shape="rect" id="node5" title="STL class. " alt="" coords="343,497,468,595"/>
-<area shape="rect" id="node8" title="STL class. " alt="" coords="213,151,326,232"/>
+<area shape="rect" id="node3" href="$d6/d22/classAOnode.xhtml" title="class &quot;AOnode&quot; for the generic node element of an AND&#45;OR graph " alt="" coords="443,860,565,1053"/>
+<area shape="rect" id="node7" href="$db/dba/classHyperArc.xhtml" title="class &quot;HyperArc&quot; for the hyperarc connecting one parent node to a number of child nodes in an AND rel..." alt="" coords="645,481,755,611"/>
+<area shape="rect" id="node4" title="STL class. " alt="" coords="514,715,593,796"/>
+<area shape="rect" id="node5" title="STL class. " alt="" coords="496,497,621,595"/>
+<area shape="rect" id="node8" title="STL class. " alt="" coords="232,151,346,232"/>
 </map>

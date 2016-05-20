@@ -8,10 +8,12 @@
 #include "aonode.h"
 
 //! constructor of class HyperArc
+//! @param[in] index    index of the hyperarc
 //! @param[in] nodes    set of child nodes connected via the hyperarc
 //! @param[in] cost     generic hyperarc cost
-HyperArc::HyperArc(vector<AOnode*> nodes, int cost)
+HyperArc::HyperArc(int index, vector<AOnode*> nodes, int cost)
 {
+    hIndex = index;
     children = nodes;
     hCost = cost;
     
@@ -19,10 +21,9 @@ HyperArc::HyperArc(vector<AOnode*> nodes, int cost)
 }
 
 //! display hyperarc information
-//! @param[in] index    index of the arc in the vector of HyperArcs
-void HyperArc::printArcInfo(int index)
+void HyperArc::printArcInfo()
 {
-    cout<<"Info of hyperarc: " <<index <<endl;
+    cout<<"Info of hyperarc: " <<hIndex <<endl;
     cout<<"Hyperarc cost: " <<hCost <<endl;
     cout<<"Child nodes: ";
     for (int i=0; i< (int)children.size(); i++)
@@ -44,12 +45,13 @@ AOnode::AOnode(string name, int cost)
 }
 
 //! add an hyperarc to child nodes
+//! @param[in] hyperarcIndex    hyperarc index
 //! @param[in] nodes            set of child nodes connected via the hyperarc
 //! @param[in] hyperarcCost     hyperarc cost
-void AOnode::addArc(vector<AOnode*> nodes, int hyperarcCost)
+void AOnode::addArc(int hyperarcIndex, vector<AOnode*> nodes, int hyperarcCost)
 {
     // create the hyperarc
-    HyperArc toAdd(nodes, hyperarcCost);
+    HyperArc toAdd(hyperarcIndex, nodes, hyperarcCost);
     
     // add this node to the vector of parents of each child node
     for (int i=0; i< (int)nodes.size(); i++)
@@ -72,7 +74,7 @@ void AOnode::printNodeInfo()
     cout<<endl;
     cout<<"Number of hyperarcs: " <<arcs.size() <<endl;
     for (int i=0; i< (int)arcs.size(); i++)
-        arcs[i].printArcInfo(i);        
+        arcs[i].printArcInfo();        
 }
 
 //! determine whether the node is feasible

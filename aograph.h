@@ -5,6 +5,7 @@
 // Description	: AND-OR graph
 //===============================================================================//
 
+#include <algorithm>
 #include <fstream>
 
 #include "aonode.h"
@@ -22,6 +23,7 @@ class Path
         int pCost;                  //!< overall cost of all the nodes in the path
         bool pComplete;             //!< complete: the path fully traverses the graph
         vector<AOnode*> pathNodes;  //!< set of the nodes in the path
+        vector<int> pathArcs;       //!< set of the hyperarcs in the path
         vector<bool> checkedNodes;  //!< checked: the node has been analysed
         
         //! constructor
@@ -73,8 +75,8 @@ class AOgraph
         void setupGraph();
         
         //** GRAPH NAVIGATION **//
-        //! find the index of the hyperarc connecting a parent to a child node
-        int findHyperarc(AOnode &parent, AOnode &child);
+        //! find the hyperarc connecting a parent to a child node
+        HyperArc* findHyperarc(AOnode &parent, AOnode &child);
         
         //! compute the overall update cost (intermediate step to update the path cost)
         int computeOverallUpdate(AOnode &node);
@@ -103,7 +105,7 @@ class AOgraph
         void printGraphInfo();
         
         //! suggest the node to solve
-        void suggestNext(bool strategy);
+        string suggestNext(bool strategy);
         
         //! solve a node, finding it by name
         void solveByName(string nameNode);

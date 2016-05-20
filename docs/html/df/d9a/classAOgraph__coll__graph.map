@@ -1,8 +1,8 @@
 <map id="AOgraph" name="AOgraph">
-<area shape="rect" id="node2" title="STL class. " alt="" coords="850,152,929,233"/>
-<area shape="rect" id="node8" href="$d6/d22/classAOnode.xhtml" title="class &quot;AOnode&quot; for the generic node element of an AND&#45;OR graph " alt="" coords="715,297,837,491"/>
-<area shape="rect" id="node3" title="STL class. " alt="" coords="827,5,952,103"/>
-<area shape="rect" id="node5" title="STL class. " alt="" coords="210,353,324,435"/>
-<area shape="rect" id="node11" href="$db/dba/classHyperArc.xhtml" title="class &quot;HyperArc&quot; for the hyperarc connecting one parent node to a number of child nodes in an AND rel..." alt="" coords="604,813,714,927"/>
-<area shape="rect" id="node13" href="$db/dc7/classPath.xhtml" title="class &quot;Path&quot; for each unique path traversing the graph from the head to the leaves ..." alt="" coords="214,765,335,975"/>
+<area shape="rect" id="node2" title="STL class. " alt="" coords="42,152,121,233"/>
+<area shape="rect" id="node8" href="$d6/d22/classAOnode.xhtml" title="class &quot;AOnode&quot; for the generic node element of an AND&#45;OR graph " alt="" coords="78,297,200,491"/>
+<area shape="rect" id="node3" title="STL class. " alt="" coords="19,5,144,103"/>
+<area shape="rect" id="node13" href="$db/dc7/classPath.xhtml" title="class &quot;Path&quot; for each unique path traversing the graph from the head to the leaves ..." alt="" coords="583,700,703,909"/>
+<area shape="rect" id="node5" title="STL class. " alt="" coords="580,353,694,435"/>
+<area shape="rect" id="node11" href="$db/dba/classHyperArc.xhtml" title="class &quot;HyperArc&quot; for the hyperarc connecting one parent node to a number of child nodes in an AND rel..." alt="" coords="197,740,307,869"/>
 </map>
