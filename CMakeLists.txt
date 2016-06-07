@@ -19,4 +19,10 @@ PROJECT(endor)
 
 ADD_EXECUTABLE(endor
   ./main.cpp
-  ./aograph.h ./aograph.cpp ./aonode.h ./aonode.cpp)
+  )
+
+add_library(AndOrLib
+        ./aograph.h ./aograph.cpp ./aonode.h ./aonode.cpp
+        )
+
+target_link_libraries(endor AndOrLib)
