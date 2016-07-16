@@ -5,13 +5,15 @@
 // Description	: Generic node element of an AND-OR graph
 //===============================================================================//
 
+#ifndef AONODE_H
+#define AONODE_H
+
 #include <iostream>
 #include <vector>
 
-using namespace std;
+#include "element.h"
 
-#ifndef AONODE_H
-#define AONODE_H
+using namespace std;
 
 // empty declaration (required by HyperArc)
 class AOnode;
@@ -40,16 +42,20 @@ class HyperArc
 //! class "AOnode" for the generic node element of an AND-OR graph
 class AOnode
 {
-    public:        
+    public:
+        NodeElement* nElement;      //!< pointer to the application-specific element associated with the node        
         string nName;               //!< name of the node
         int nCost;                  //!< cost of the node
         bool nSolved;               //!< solved: the operation has been performed
         bool nFeasible;             //!< feasible: >=1 hyperarc has all child nodes solved
         vector<HyperArc> arcs;      //!< hyperarcs connecting the node to child nodes
         vector<AOnode*> parents;    //!< nodes having this node as a child node
-        
+
         //! constructor
 		AOnode(string name, int cost);
+
+        //! associate the application-specific element with the node
+        void addElement(NodeElement* element);
         
         //! add an hyperarc to child nodes
         void addArc(int hyperarcIndex, vector<AOnode*> nodes, int hyperarcCost);

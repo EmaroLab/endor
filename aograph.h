@@ -5,15 +5,15 @@
 // Description	: AND-OR graph
 //===============================================================================//
 
+#ifndef AOGRAPH_H
+#define AOGRAPH_H
+
 #include <algorithm>
 #include <fstream>
 
 #include "aonode.h"
 
 using namespace std;
-
-#ifndef AOGRAPH_H
-#define AOGRAPH_H
 
 //! class "Path" for each unique path traversing the graph from the head to the leaves
 class Path

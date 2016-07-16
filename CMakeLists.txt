@@ -19,4 +19,4 @@ PROJECT(endor)
 
 ADD_EXECUTABLE(endor
   ./main.cpp
-  ./aograph.h ./aograph.cpp ./aonode.h ./aonode.cpp)
+  ./aograph.h ./aograph.cpp ./aonode.h ./aonode.cpp ./element.h)

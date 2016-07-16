@@ -299,7 +299,7 @@ void AOgraph::setupGraph()
 {
     // update the feasibility status of the nodes in the graph
     updateNodeFeasibility();
-    printGraphInfo();
+    //DEBUG:printGraphInfo();
     
     // generate all paths navigating the graph
     generatePaths();
