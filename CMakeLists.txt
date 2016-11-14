@@ -26,3 +26,4 @@ add_library(AndOrLib
         )
 
 target_link_libraries(endor AndOrLib)
+

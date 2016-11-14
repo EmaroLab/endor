@@ -44,6 +44,13 @@ AOnode::AOnode(string name, int cost)
     //DEBUG:printNodeInfo();
 }
 
+//! associate the application-specific element with the node
+//! @param[in] element    pointer to the element to associate
+void AOnode::addElement(NodeElement* element)
+{
+    nElement = element;
+}
+
 //! add an hyperarc to child nodes
 //! @param[in] hyperarcIndex    hyperarc index
 //! @param[in] nodes            set of child nodes connected via the hyperarc
@@ -64,6 +71,7 @@ void AOnode::addArc(int hyperarcIndex, vector<AOnode*> nodes, int hyperarcCost)
 //! display node information
 void AOnode::printNodeInfo()
 {
+    cout<<endl;
     cout<<"Info of node: " <<nName <<endl;
     cout<<"Node cost: " <<nCost <<endl;
     cout<<"Is feasible? " <<boolalpha <<nFeasible <<endl;
@@ -74,7 +82,16 @@ void AOnode::printNodeInfo()
     cout<<endl;
     cout<<"Number of hyperarcs: " <<arcs.size() <<endl;
     for (int i=0; i< (int)arcs.size(); i++)
-        arcs[i].printArcInfo();        
+        arcs[i].printArcInfo();
+    
+    // display info of the associated element
+    if (nElement != NULL)
+    {
+        cout<<"Info of associated element" <<endl;
+        nElement->printNodeElementInfo();
+    }
+    else
+        cout<<"[REPORT] No application-specific element is associated with this node." <<endl;    
 }
 
 //! determine whether the node is feasible
@@ -122,6 +139,12 @@ void AOnode::isFeasible()
 //! @return result of the operation (true = done, false = not done)
 bool AOnode::setSolved()
 {
+    // issue a warning if the node is already solved
+    if(nSolved == true)
+    {
+        cout<<"[WARNING] The node is already solved." <<endl;
+        return false;
+    }
     // a node can be solved only if it's feasible
     if (nFeasible == true)
         nSolved = true;
