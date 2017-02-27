@@ -24,7 +24,8 @@ class HyperArc
     public:
         int hIndex;                 //!< index of the hyperarc
         vector<AOnode*> children;   //!< set of child nodes connected via the hyperarc
-        int hCost;                  //!< cost of the hyperarc
+	
+	int hCost;                  //!< cost of the hyperarc
         
         //! constructor
 		HyperArc(int index, vector<AOnode*> nodes, int cost);
@@ -58,8 +59,14 @@ class AOnode
         void addElement(NodeElement* element);
         
         //! add an hyperarc to child nodes
-        void addArc(int hyperarcIndex, vector<AOnode*> nodes, int hyperarcCost);
+        void addArc(int hyperarcIndex, vector <AOnode*> nodes, int hyperarcCost);
         
+	//! add a new hyperarc from one node to an other one
+        void newArc(int hyperarcIndex,AOnode& nodes, int hyperarcCost);
+
+	//! modify the cost of an hyperarc
+        void updateCost(AOnode* nodeFather, AOnode* nodeSon, int hyperarcCost);
+
         //! display node information
         void printNodeInfo();
         

@@ -1,0 +1,74 @@
+Drone 20 Node16
+Node16 0 1 0 2 1 move 16
+Node11 0 2 0 2 1 move 11
+Node6 0 3 0 2 1 move 6
+Node7 0 4 0 2 1 move 7 
+Node8 0 5 0 2 1 move 8
+Node9 0 6 0 2 1 move 9
+Node14 0 7 0 2 1 move 14
+Node1 0 8 0 2 1 move 1 
+Node2 0 9 0 2 1 move 2
+Node3 0 10 0 2 1 move 3 
+Node4 0 11 0 2 1 move 4
+Node17 0 12 0 2 1 move 17
+Node18 0 13 0 2 1 move 18
+Node19 0 14 0 2 1 move 19
+Node20 0 15 0 2 1 move 20
+Node15 0 16 0 2 1 move 15
+Node10 0 17 0 2 1 move 10
+Node12 0 18 0 2 1 move 12
+Node13 0 19 0 2 1 move 13
+Node5 0 20 0 2 1 move 5
+1 Node16 2
+Node12
+1 Node16 1 
+Node11
+1 Node16 1 
+Node17
+1 Node11 1
+Node6
+1 Node11 1
+Node12
+1 Node6 1
+Node1
+1 Node6 1
+Node7
+1 Node7 1
+Node8
+1 Node7 2
+Node13
+1 Node8 1
+Node9
+1 Node9 1
+Node14
+1 Node14 1
+Node19
+1 Node1 1
+Node2
+1 Node2 1 
+Node3
+1 Node3 1
+Node4
+1 Node4 1
+Node5
+1 Node17 1
+Node18
+1 Node18 1
+Node19
+1 Node19 1
+Node20
+1 Node20 1
+Node15
+1 Node15 1
+Node10
+1 Node10 1
+Node5
+1 Node12 1
+Node13
+1 Node12 2
+Node18
+1 Node13 2
+Node19
+
+
+

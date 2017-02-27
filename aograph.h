@@ -5,6 +5,7 @@
 // Description	: AND-OR graph
 //===============================================================================//
 
+
 #ifndef AOGRAPH_H
 #define AOGRAPH_H
 
@@ -15,7 +16,7 @@
 
 using namespace std;
 
-//! class "Path" for each unique path traversing the graph from the head to the leaves
+//! class "Path" for each unique path traversing the graph from the head to the leaves(foglia)
 class Path
 {        
     public:
@@ -34,13 +35,16 @@ class Path
         
         //! display path information
         void printPathInfo();
+
+	//! display optimal path information
+	void printOptimalPathInfo();
         
         //! add a node in the path
         void addNode(AOnode* node);
         
         //! update the path information (when a node is solved)
         void updatePath(string nameNode, int cost);
-        
+
         //! find the feasible node to suggest
         AOnode* suggestNode();
         
@@ -61,16 +65,10 @@ class AOgraph
         
         //! find a node by name
         AOnode* findByName(string nameNode);
-        
-        //! update the feasibility status of the nodes in the graph
-        void updateNodeFeasibility();
 		
         //! compute the cost to add to a path
         int computeAddCost(AOnode &node, int hIndex);
-        
-        //! generate all possible paths navigating the graph
-        void generatePaths();
-        
+
         //! set up a graph
         void setupGraph();
         
@@ -81,11 +79,6 @@ class AOgraph
         //! compute the overall update cost (intermediate step to update the path cost)
         int computeOverallUpdate(AOnode &node);
         
-        //! update all paths (update path costs when a node is solved)
-        void updatePaths(AOnode &solved);
-        
-        //! find the optimal path (long-sighted strategy)
-        int findOptimalPath();
     
     public:
         string gName;           //!< name of the graph
@@ -103,13 +96,28 @@ class AOgraph
         
         //! display graph information
         void printGraphInfo();
-        
+
+	//! update cost of a path (update path costs when a cost of an hyperarc changes)
+	bool updateAllCost(AOnode &parent, AOnode &child);
+
         //! suggest the node to solve
         string suggestNext(bool strategy);
-        
+
+        //! update all paths (update path costs when a node is solved)
+        void updatePaths(AOnode &solved);
+
+        //! find the optimal path (long-sighted strategy)
+        int findOptimalPath();
+
+	//! update the feasibility status of the nodes in the graph
+        void updateNodeFeasibility();
+
         //! solve a node, finding it by name
         void solveByName(string nameNode);
-        
+    	
+	//! generate all possible paths navigating the graph    
+	void generatePaths();
+
         //! destructor
 		~AOgraph()
 		{
