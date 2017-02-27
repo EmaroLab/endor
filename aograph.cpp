@@ -5,8 +5,13 @@
 // Description	: AND-OR graph
 //===============================================================================//
 
+#include "navigateElement.h"
 #include "aograph.h"
-
+#include <sys/stat.h>
+#include <sys/types.h>
+#define MY_MASK 0777
+string NameGraph;
+string MyDir;
 //! constructor of class Path
 //! @param[in] cost 	initial cost of the path
 //! @param[in] index 	unique index of the path
@@ -33,6 +38,7 @@ Path::Path(const Path &toBeCopied, int index)
 //! display path information
 void Path::printPathInfo()
 {
+
     cout<<"Info of path: " <<pIndex <<endl;
     //DEBUG: cout<<"Is complete? " <<boolalpha <<pComplete <<endl;
     cout<<"Total cost: " <<pCost <<endl;
@@ -44,10 +50,42 @@ void Path::printPathInfo()
     {
         cout<<pathNodes[i]->nName <<" ";
         //DEBUG: cout<<"checked? " <<boolalpha <<checkedNodes[i];
+        /*DEBUG
+        if (checkedNodes[i] == true)
+          cout<<"- done";
+        */
+        cout<<endl;
+    }
+    cout<<endl;
+}
+
+//! display optimal path information
+void Path::printOptimalPathInfo()
+{
+
+
+    string NameFile=MyDir+NameGraph+".txt";
+
+    ofstream outfile(NameFile.c_str());
+
+    cout<<"Info of path: " <<pIndex <<endl;
+    //DEBUG: cout<<"Is complete? " <<boolalpha <<pComplete <<endl;
+    cout<<"Total cost: " <<pCost <<endl;
+    cout<<"Hyperarcs in path: ";
+    for (int i=0; i< (int)pathArcs.size(); i++)
+        cout<<pathArcs[i] <<" ";
+    cout<<endl <<"Nodes in path:" <<endl;
+    for (int i=(int)pathNodes.size()-1; i>=0; i--)
+    {
+        cout<<pathNodes[i]->nName <<" ";
+        if(!pathNodes[i]->nSolved)
+            outfile<<"type="<<pathNodes[i]->nElement->GetAction()<<endl<<"id="<<pathNodes[i]->nElement->GetID()<<endl<<"x="<<pathNodes[i]->nElement->GetX()<<endl<<"y="<<pathNodes[i]->nElement->GetY()<<endl<<"z="<<-(pathNodes[i]->nElement->GetZ())<<endl<<"alpha="<<pathNodes[i]->nElement->GetAlpha()<<endl;
+        //DEBUG: cout<<"checked? " <<boolalpha <<checkedNodes[i];
         if (checkedNodes[i] == true)
             cout<<"- done";
         cout<<endl;
     }
+    outfile<<"type=land"<<endl<<"#"<<endl;
     cout<<endl;
 }
 
@@ -58,7 +96,7 @@ void Path::addNode(AOnode* node)
     // update the nodes in the path
     pathNodes.push_back(node);
     checkedNodes.push_back(false);
-    
+
     // N.B. the cost of the path is updated when the node is checked
 }
 
@@ -74,9 +112,9 @@ void Path::updatePath(string nameNode, int cost)
         if (pathNodes[i]->nName == nameNode)
             checkedNodes[i] = true;
     }
-    // update the cost of the path        
+    // update the cost of the path
     pCost = pCost - cost;
-    
+
     cout<<"Path: " <<pIndex <<endl;
     cout<<"Updated path cost: " <<pCost <<endl;
 }
@@ -86,7 +124,7 @@ void Path::updatePath(string nameNode, int cost)
 AOnode* Path::suggestNode()
 {
     AOnode* selection = NULL;
-    
+
     // iterate on the nodes in the path, from the last to the first one
     for (int i = (int)pathNodes.size()-1; i > -1; i--)
     {
@@ -102,11 +140,11 @@ AOnode* Path::suggestNode()
             }
         }
     }
-    
+
     // raise an error if the suggested node is NULL
     if (selection == NULL)
         cout<<"[ERROR] No suggestion possible." <<endl;
-    
+
     return selection;
 }
 
@@ -115,9 +153,9 @@ AOnode* Path::suggestNode()
 //! @param[in] cost        generic node cost
 void AOgraph::addNode(string nameNode, int cost)
 {
-    // create the node
+   // create the node
     AOnode toAdd(nameNode, cost);
-    
+
     // add it to the set of nodes in the graph
     graph.push_back(toAdd);
 }
@@ -128,7 +166,7 @@ void AOgraph::addNode(string nameNode, int cost)
 AOnode* AOgraph::findByName(string nameNode)
 {
     AOnode* temp = NULL;
-    
+
     for (int i=0; i< (int)graph.size(); i++)
     {
         if (graph[i].nName == nameNode)
@@ -137,7 +175,7 @@ AOnode* AOgraph::findByName(string nameNode)
             break;
         }
     }
-    
+
     // issue a warning if the node has not been found
     if (temp == NULL)
         cout<<"[Warning] Name not found."
@@ -149,9 +187,9 @@ AOnode* AOgraph::findByName(string nameNode)
 void AOgraph::updateNodeFeasibility()
 {
     for (int i=0; i< (int)graph.size(); i++)
-        graph[i].isFeasible();        
+        graph[i].isFeasible();
 }
-		
+
 //! compute the cost to add to a path
 //! @param[in] node     reference to the node to use for cost computation
 //! @param[in] hIndex   index of the node's hyperarc to use for cost computation
@@ -161,7 +199,7 @@ int AOgraph::computeAddCost(AOnode &node, int hIndex)
     // 1. the cost is to be ADDED to the cost of the path
     // 2. cost = node.nCost + node.arcs[hIndex].hCost
     int cost = 0;
-    
+
     // raise an error if the hyperarc index is out of bounds
     if (hIndex >= (int)node.arcs.size())
     {
@@ -169,7 +207,7 @@ int AOgraph::computeAddCost(AOnode &node, int hIndex)
             <<"Hyperarc index " <<hIndex <<" does not exist." <<endl;
         return -1;
     }
-        
+
     // if hIndex == -1, the node is terminal
     if (hIndex == -1)
         cost = node.nCost;
@@ -177,7 +215,7 @@ int AOgraph::computeAddCost(AOnode &node, int hIndex)
     else
         cost = node.nCost + node.arcs[hIndex].hCost;
     //DEBUG:cout<<"Node: " <<node.nName <<" - Cost: " <<cost <<endl;
-    
+
     return cost;
 }
 
@@ -190,12 +228,12 @@ void AOgraph::generatePaths()
         cout<<"[WARNING] There is no graph to navigate (head == NULL)." <<endl;
         return;
     }
-    
+
     // otherwise, create a path with the head node
     Path* newPath = new Path(0,0);
     newPath->addNode(head);
     paths.push_back(*newPath);
-        
+
     // iterate through the paths until they're all complete
     AOnode* currentNode = head;
     while(1)
@@ -213,9 +251,9 @@ void AOgraph::generatePaths()
             }
         }
         // if all paths are complete, the generation is done
-        if (allComplete == true)
+        if (allComplete == true )
             return;
-            
+
         // find the first not-checked node in the open path
         bool allChecked = true;
         int currentNodeIndex;
@@ -243,7 +281,7 @@ void AOgraph::generatePaths()
                 int cost = computeAddCost(*currentNode, -1);
                 paths[currentPathIndex].pCost = paths[currentPathIndex].pCost + cost;
             }
-            
+
             // if the current node has only one hyperarc:
             // 1. check it
             // 2. add the hyperarc index to the path
@@ -258,7 +296,7 @@ void AOgraph::generatePaths()
                 for (int i=0; i< (int)currentNode->arcs[0].children.size(); i++)
                     paths[currentPathIndex].addNode(currentNode->arcs[0].children[i]);
             }
-            
+
             // if the current node has more than one hyperarc:
             // 1. create (numArcs-1) copies of the current path
             // 2. check the current node in the copies
@@ -297,10 +335,21 @@ void AOgraph::generatePaths()
 //! set up a graph
 void AOgraph::setupGraph()
 {
+    NameGraph = gName;
+    MyDir="./Modules/Executioner/libs/AndOr/Path/"+NameGraph+"/";
+
+    string Nname=MyDir+"id.txt";
+    ofstream File(Nname.c_str());
+
+
+    for (int i=0; i< (int)graph.size(); i++) {
+        File<<"type="<<graph[i].nElement->GetAction()<<endl<<"id="<<graph[i].nElement->GetID()<<endl<<"x="<<graph[i].nElement->GetX()<<endl<<"y="<<graph[i].nElement->GetY()<<endl<<"z="<<-(graph[i].nElement->GetZ())<<endl<<"alpha="<<graph[i].nElement->GetAlpha()<<endl;
+    }
+    mkdir(MyDir.c_str(),MY_MASK);
     // update the feasibility status of the nodes in the graph
     updateNodeFeasibility();
     //DEBUG:printGraphInfo();
-    
+
     // generate all paths navigating the graph
     generatePaths();
     // set the "checked" property of the nodes in the paths to false
@@ -309,9 +358,19 @@ void AOgraph::setupGraph()
         for (int j=0; j < (int)paths[i].checkedNodes.size(); j++)
             paths[i].checkedNodes[j] = false;
 
+    //generate file "readMe" which contains the number of paths.
+    string NameFile=MyDir+gName+"_readMe.txt";
+
+    //cout<<""<<NameFile.c_str()<<endl;
+
+    ofstream outfile(NameFile.c_str());
+    if (!outfile)
+         cout<<"error to create file readMe"<<endl;
+    outfile<<(int)paths.size()<<endl;
+
     for (int i=0; i < (int)paths.size(); i++)
         paths[i].printPathInfo();
-            
+
     // identify the first suggestion to make (long-sighted strategy chosen BY DEFAULT)
     suggestNext(true);
 }
@@ -323,7 +382,7 @@ void AOgraph::setupGraph()
 HyperArc* AOgraph::findHyperarc(AOnode &parent, AOnode &child)
 {
     HyperArc* temp = NULL;
-    
+
     for (int j=0; j< (int)parent.arcs.size(); j++)
     {
         for (int k=0; k< (int)parent.arcs[j].children.size(); k++)
@@ -336,32 +395,32 @@ HyperArc* AOgraph::findHyperarc(AOnode &parent, AOnode &child)
             }
         }
     }
-    
+
     /* DEBUG
     // raise a warning if no hyperarc was found
     if (temp == NULL)
         cout<<"[WARNING] There is no hyperarc connecting " <<parent.nName
             <<" to " <<child.nName <<"." <<endl;
     */
-    
-    return temp;    
+
+    return temp;
 }
 
 //! compute the overall update cost (intermediate step to update the path cost)
 //! @param[in] node     reference to the node to use for cost computation
 //! @return             overall update cost (to subtract from the path cost)
 int AOgraph::computeOverallUpdate(AOnode &node)
-{    
+{
     // 1. the cost is to be SUBTRACTED from the cost of the path
     // 2. the cost is computed as:
         // a. pathsCosts = set of the costs of the hyperarcs TO the current node
         // b. cost = max(pathsCosts)
-        
+
     // N.B. the cost is to be subtracted from path[i] as:
     // 1. toSubtract = node.nCost + abs(pathsCosts[path_i] - cost);
-    
+
     vector<int> pathsCosts;
-    
+
     // for each parent node, find the cost of the hyperarc to the current node
     for (int i=0; i< (int)node.parents.size(); i++)
     {
@@ -378,14 +437,14 @@ int AOgraph::computeOverallUpdate(AOnode &node)
         cout<<pathsCosts[i] <<" ";
     cout<<endl;
     */
-    
+
     // find the maximum in pathsCosts
     int cost = pathsCosts[0];
     for (int i=1; i< (int)pathsCosts.size(); i++)
         if (pathsCosts[i] > cost)
             cost = pathsCosts[i];
     //DEBUG:cout<<"maxUpdate = " <<cost <<endl;
-    
+
     return cost;
 }
 
@@ -396,13 +455,13 @@ void AOgraph::updatePaths(AOnode &solved)
     // update the path information (cost) of EACH path as:
     // toSubtract = solved.nCost + overall_update - path_i_update;
     // path[i].cost = path[i].cost - toSubtract;
-    
+
     pIndices.clear();
     pUpdate.clear();
     int toSubtract = solved.nCost + computeOverallUpdate(solved);
     //DEBUG:cout<<"solved.nCost = " <<solved.nCost <<endl;
     //DEBUG:cout<<"maxUpdate = " <<computeOverallUpdate(solved) <<endl;
-    
+
     // find all paths which include the solved node
     vector<int> withChild;
     for (int i=0; i < (int)paths.size(); i++)
@@ -415,7 +474,7 @@ void AOgraph::updatePaths(AOnode &solved)
         cout<<"Path index: " <<withChild[i] <<" ";
     cout<<endl;
     */
-    
+
     // find the paths including the solved node AND any of its parents
     vector<int> withBoth;
     int toAdd;
@@ -423,11 +482,13 @@ void AOgraph::updatePaths(AOnode &solved)
     {
         for (int j=0; j < (int)solved.parents.size(); j++)
             for (int k=0; k < (int)paths[withChild[i]].pathNodes.size(); k++)
-                if(paths[withChild[i]].pathNodes[k]->nName == solved.parents[j]->nName)
+                if(paths[withChild[i]].pathNodes[k]->nName == solved.parents[j]->nName) {
                     toAdd = withChild[i];
-        // make sure that paths are added only ONCE
-        if ( std::find(withBoth.begin(), withBoth.end(), toAdd) == withBoth.end() )
-            withBoth.push_back(toAdd);
+                    // make sure that paths are added only ONCE
+                    if ( std::find(withBoth.begin(), withBoth.end(), toAdd) == withBoth.end() )
+                        //toAdd could overwrite a parent node, so it is added inside the if.
+                        withBoth.push_back(toAdd);
+                }
     }
     /* DEBUG
     cout<<"Paths with solved node & any parent: ";
@@ -442,7 +503,7 @@ void AOgraph::updatePaths(AOnode &solved)
         for (int j=0; j < (int)paths[withBoth[i]].pathNodes.size(); j++)
         {
             HyperArc* arc = findHyperarc(*paths[withBoth[i]].pathNodes[j], solved);
-                    
+
             // update the path cost (if there is a direct link in THIS path)
             if (arc != NULL)
             {
@@ -454,14 +515,14 @@ void AOgraph::updatePaths(AOnode &solved)
                         int pathUpdate = arc->hCost;
                         //DEBUG:cout<<"pathUpdate = " <<pathUpdate <<endl;
                         int thisSubtract = toSubtract - pathUpdate;
-                        
+
                         // update the cost of the path
                         paths[withBoth[i]].updatePath(solved.nName, thisSubtract);
-                        
+
                         // save the index & subtracted cost of the updated path
                         pIndices.push_back(withBoth[i]);
                         pUpdate.push_back(pathUpdate);
-                        
+
                         break;
                     }
                 }
@@ -481,7 +542,7 @@ int AOgraph::findOptimalPath()
             <<"Did you run generatePaths()?" <<endl;
         return -1;
     }
-    
+
     int index = 0;
     int cost = paths[0].pCost;
     for (int i=0; i< (int)paths.size(); i++)
@@ -493,16 +554,17 @@ int AOgraph::findOptimalPath()
                 <<"Did you run generatePaths()?" <<endl;
             return -1;
         }
-        
+
         if (paths[i].pCost < cost)
         {
             cost = paths[i].pCost;
             index = i;
         }
     }
-    cout<<"The optimal path is: " <<index <<endl;
-    paths[index].printPathInfo();
-    
+
+    cout<< endl << "The optimal path is: " <<index <<endl;
+    paths[index].printOptimalPathInfo();
+
     return index;
 }
 
@@ -512,7 +574,7 @@ AOgraph::AOgraph(string name)
 {
     gName = name;
     head = NULL;
-    
+
     //DEBUG:printGraphInfo();
 }
 
@@ -520,19 +582,21 @@ AOgraph::AOgraph(string name)
 //! @param[in] fileName    name of the file with the graph description
 void AOgraph::loadFromFile(string fileName)
 {
+
+
     // raise an error if the graph is not empty
     if (graph.size() != 0)
     {
         cout<<"[ERROR] The graph is not empty."
             <<"Do you really want to overwrite the current graph?" <<endl;
         return;
-    }            
-    
+    }
+
     ifstream graphFile(fileName.c_str());
-	cout <<"Loading graph description from file: " <<fileName <<endl;
-    
-	while (!graphFile.eof())
-	{
+    cout <<"Loading graph description from file: " <<fileName <<endl;
+
+    while (!graphFile.eof())
+    {
         // the first line contains:
         // 1. the name of the graph
         // 2. the number N=numNodes of nodes
@@ -540,23 +604,28 @@ void AOgraph::loadFromFile(string fileName)
         string name;
         int numNodes;
         string headName;
-        
+
         graphFile >>name >>numNodes >>headName;
         if (!graphFile)
-			break;
+            break;
         gName = name;
-        
+
         // the next N lines contain the name and cost of all the nodes in the graph
         string nameNode;
-        int cost;
+        double x,y,z,alpha;
+        string tmp;
+        int cost, ID;
         for (int i=0; i < numNodes; i++)
-        {            
-            graphFile >>nameNode >> cost;
+        {
+            graphFile >>nameNode >> cost >> x >> y >> z >> alpha >> tmp >> ID ;
+            NavigateElement* someNE = new NavigateElement(x,y,z,alpha,tmp,ID);
+
             if (!graphFile)
                 break;
             addNode(nameNode, cost);
+            graph[i].addElement(someNE);
         }
-        
+
         // the next ?? lines contain the descriptions of the hyperarcs in the graph
         int hyperarcIndex = 0;
         while (!graphFile.eof())
@@ -566,13 +635,13 @@ void AOgraph::loadFromFile(string fileName)
             int numChildren;
             int hyperarcCost;
             vector<AOnode*> childNodes;
-            
+
             graphFile >>numChildren >>nameFather >>hyperarcCost;
             if (!graphFile)
                 break;
             father = findByName(nameFather);
             //DEBUG:cout<<"nameFather = " <<nameFather <<endl;
-            
+
             // the next numChildren lines contain the names of the child nodes
             for (int i=0; i < numChildren; i++)
             {
@@ -591,7 +660,7 @@ void AOgraph::loadFromFile(string fileName)
         head = findByName(headName);
     }
     graphFile.close();
-    
+
     // set up the graph (nodes feasibility, paths costs)
     setupGraph();
 }
@@ -619,9 +688,9 @@ string AOgraph::suggestNext(bool strategy)
         cout<<"[WARNING] The graph is solved. No suggestion possible." <<endl;
         return "end";
     }
-    
+
     int optimalPathIndex = 0;
-        
+
     // short-sighted strategy:
     // pick the path which received the highest benefit from the last action
     if (strategy == false)
@@ -640,7 +709,7 @@ string AOgraph::suggestNext(bool strategy)
     cout<<"ENDOR suggestion: " <<endl
         <<"Suggested path = " <<optimalPathIndex <<endl
         <<"Suggested node = " <<suggestion->nName <<endl;
-    
+
     return suggestion->nName;
 }
 
@@ -651,19 +720,89 @@ void AOgraph::solveByName(string nameNode)
     AOnode* solved = findByName(nameNode);
     bool result = solved->setSolved();
     updateNodeFeasibility();
-    printGraphInfo();
-    
+    //printGraphInfo();
+
     // report that the graph has been solved if the solved node is the head node
     if (head->nSolved == true)
     {
         cout<<"[REPORT] The graph is solved (head node solved)." <<endl;
         return;
     }
-    
+
     // update the path information (cost) of all paths
     if (result == true)
         updatePaths(*solved);
     cout<<endl <<"Updated paths: " <<endl;
+    /*DEBUG
     for(int i=0; i< (int)pUpdate.size(); i++)
         cout<<"Path index: " <<pIndices[i] <<" - Benefit: " <<pUpdate[i] <<endl;
+    */
 }
+
+//! update cost of a path (update path costs when a cost of an hyperarc changes)
+//! @param[in] parent       reference to the parent node of the changed hyperarc
+//! @param[in] child        reference to the child node of the changed hyperarc
+bool AOgraph::updateAllCost(AOnode &parent, AOnode &child){
+
+    // find all paths which include the child node
+    vector<int> withChild;
+    for (int i=0; i < (int)paths.size(); i++)
+        for (int j=0; j< (int)paths[i].pathNodes.size(); j++)
+            if(paths[i].pathNodes[j]->nName == child.nName)
+                withChild.push_back(i);
+
+    /*DEBUG
+    cout<<"Paths with child node: ";
+    for (int i=0; i < (int)withChild.size(); i++)
+        cout<<"Path index: " <<withChild[i] <<" ";
+    cout<<endl;
+    */
+
+
+    // find the paths including the child node and the parent node
+    vector<int> withBoth;
+    int toAdd=0;
+    for (int i=0; i < (int)withChild.size(); i++)
+    {
+        for (int k=0; k < (int)paths[withChild[i]].pathNodes.size(); k++)
+            if(paths[withChild[i]].pathNodes[k]->nName == parent.nName){
+                toAdd = withChild[i];
+                // make sure that paths are added only ONCE
+                if ( std::find(withBoth.begin(), withBoth.end(), toAdd) == withBoth.end() )
+                    withBoth.push_back(toAdd);
+            }
+    }
+
+    /*DEBUG
+    cout<<"Paths with both parent and child node: ";
+    for (int i=0; i < (int)withBoth.size(); i++)
+        cout<<"Path index: " <<withBoth[i] <<" ";
+    cout<<endl;
+    */
+
+    for (int i=0; i < (int)withBoth.size(); i++)
+    {
+        for (int j=0; j < (int)paths[withBoth[i]].pathNodes.size(); j++)
+        {
+            if(paths[withBoth[i]].pathNodes[j]->nName==parent.nName) {
+                HyperArc* arc = findHyperarc(*paths[withBoth[i]].pathNodes[j], child);
+                // update the path cost (if there is a direct link in THIS path)
+                if (arc != NULL)
+                    for (int k=0; k < (int)paths[withBoth[i]].pathArcs.size(); k++)
+                        if (paths[withBoth[i]].pathArcs[k] == arc->hIndex)
+                            paths[withBoth[i]].pCost = paths[withBoth[i]].pCost + arc->hCost;
+            }
+         }
+     }
+     return true;
+}
+
+
+
+
+
+
+
+
+
+

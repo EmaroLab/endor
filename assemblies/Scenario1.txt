@@ -1,0 +1,30 @@
+Scenario1 7 Node7     
+Node7 0 -9 9 2 1 move 7 
+Node8 0 -9 5 2 1 move 8
+Node4 0 -5 9 2 1 move 4
+Node5 0 -5 5 2 1 move 5
+Node2 0 -1 5 2 1 move 2 
+Node1 0 -1 9 2 1 move 1
+Node3 0 -1 1 2 1 move 3 
+1 Node7 1
+Node8
+1 Node7 1 
+Node4
+1 Node7 2 
+Node5
+1 Node8 2
+Node4
+1 Node4 1
+Node5
+1 Node4 1
+Node1
+1 Node4 2
+Node2
+1 Node5 1
+Node2
+1 Node5 2
+Node1
+1 Node1 1
+Node2
+1 Node2 1
+Node3

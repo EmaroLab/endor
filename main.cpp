@@ -29,7 +29,7 @@ int main(int argc, char **argv)
     char c_strategy;
     string fileName;
     string nodeName;
-    
+    string path="./assemblies/";
     // create an empty graph
     string name = "DEFAULT";
     AOgraph oneGraph(name);
@@ -57,7 +57,7 @@ int main(int argc, char **argv)
             case 'L':
                 cout<<"Graph configuration: ";
                 cin>>fileName;
-                oneGraph.loadFromFile(fileName);
+                oneGraph.loadFromFile(path+fileName);
                 break;
             case 'N':
                 cout<<"[Y/N] Use long-sighted (optimal path) strategy? ";

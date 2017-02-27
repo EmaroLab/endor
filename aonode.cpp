@@ -35,8 +35,8 @@ void HyperArc::printArcInfo()
 //! @param[in] name	   name of the node
 //! @param[in] cost    generic node cost
 AOnode::AOnode(string name, int cost)
-{
-    nName = name;
+{   
+  nName = name;
 	nCost = cost;
     nFeasible = false;
     nSolved = false;
@@ -68,12 +68,28 @@ void AOnode::addArc(int hyperarcIndex, vector<AOnode*> nodes, int hyperarcCost)
     arcs.push_back(toAdd);
 }
 
+//! modify the cost of an hyperarc
+//! @param[in] nodeFather            father node
+//! @param[in] nodeSon               child node connected via the hyperarc
+//! @param[in] hyperarcCost          new hyperarc cost
+void AOnode::updateCost(AOnode* nodeFather, AOnode* nodeSon, int hyperarcCost)
+{
+    for(int i=0; i<(int)nodeFather->arcs.size(); i++)
+      for (int j=0; j<(int)nodeFather->arcs[i].children.size(); j++)
+          if (nodeFather->arcs[i].children[j]->nName==nodeSon->nName) {
+              //DEBUG:cout << "cost befor " << nodeFather->arcs[i].hCost << endl;
+              nodeFather->arcs[i].hCost=hyperarcCost;
+              //DEBUG:cout << "cost after " << nodeFather->arcs[i].hCost << endl;
+              //DEBUG:cout << "arc index " << nodeFather->arcs[i].hIndex << endl;
+          }
+}
+
 //! display node information
 void AOnode::printNodeInfo()
 {
     cout<<endl;
     cout<<"Info of node: " <<nName <<endl;
-    cout<<"Node cost: " <<nCost <<endl;
+    //cout<<"Node cost: " <<nCost <<endl;
     cout<<"Is feasible? " <<boolalpha <<nFeasible <<endl;
     cout<<"Is solved? " <<boolalpha <<nSolved <<endl;
     cout<<"Parent nodes: ";
@@ -83,7 +99,6 @@ void AOnode::printNodeInfo()
     cout<<"Number of hyperarcs: " <<arcs.size() <<endl;
     for (int i=0; i< (int)arcs.size(); i++)
         arcs[i].printArcInfo();
-    
     // display info of the associated element
     if (nElement != NULL)
     {
@@ -98,7 +113,7 @@ void AOnode::printNodeInfo()
 void AOnode::isFeasible()
 {
     bool temp_isFeasible = false;
-    
+
     // 1. the node is feasible if it is already feasible
     if (nFeasible == true)
         temp_isFeasible = true;
@@ -152,4 +167,20 @@ bool AOnode::setSolved()
         cout<<"[ERROR] The node is not feasible. Are you sure it is solved?" <<endl;
     
     return nSolved;
+}
+
+//! add a new hyperarc from one node to an other one
+//! @param[in] hyperarcIndex    hyperarc index
+//! @param[in] nodes            child node connected via the hyperarc
+//! @param[in] hyperarcCost     hyperarc cost
+void AOnode::newArc(int hyperarcIndex, AOnode& nodes, int hyperarcCost)
+{
+    vector <AOnode*> node;
+    node.push_back(&nodes);
+
+    // create the hyperarc
+    HyperArc toAdd(hyperarcIndex, node, hyperarcCost);
+    
+    // add it to the set of hyperarcs
+    arcs.push_back(toAdd);
 }
